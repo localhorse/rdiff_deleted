@@ -3,55 +3,61 @@ import sys
 
 import gzip
 
+DEBUG = 0
+
 DELETED = 0
 PRESENT = 1
 
 file_prefix = "file_statistics."
 file_suffix = ".data.gz"
 
+def print_debug(msg):
+    if DEBUG:
+        sys.stdout.write(msg)
+
 if __name__ == "__main__":
 
     if len(sys.argv) < 2:
-        sys.stdout.write("Not enough arguments.\n")
+        print_debug("Not enough arguments.\n")
         sys.exit(-1)
 
     dir = sys.argv[1]
     path = os.path.join(dir, "rdiff-backup-data")
 
     if not os.path.exists(path):
-        sys.stdout.write("Path does not look like a valid backup.\n")
+        print_debug("Path does not look like a valid backup.\n")
         sys.exit(-1)
 
     rev_list = []
     raw_list = os.listdir(path)
 
-    sys.stdout.write("Loading file list: ")
+    print_debug("Loading file list: ")
 
     for file in raw_list:
-        sys.stdout.write(".")
+        print_debug(".")
         if file.find("file_statistics") == 0:
             raw_date = file.replace(file_prefix, "").replace(file_suffix, "")
             rev_list.append(raw_date)
 
-    sys.stdout.write(" done loading.\n")
+    print_debug(" done loading.\n")
 
-    ##sys.stdout.write("Sorting list: .")
+    ##print_debug("Sorting list: .")
     rev_list.sort()
-    ##sys.stdout.write(" done sorting.\n")
+    ##print_debug(" done sorting.\n")
     backup_dict = {}
 
-    sys.stdout.write("Scanning file statistics: ")
+    print_debug("Scanning file statistics: ")
 
     for revision in rev_list:
 
-        sys.stdout.write(".")
-        ##sys.stdout.write("Reading %s: " % revision)
+        print_debug(".")
+        ##print_debug("Reading %s: " % revision)
 
         stats_file = gzip.open(os.path.join(path, "%s%s%s" % (file_prefix, revision, file_suffix)))
         ##stats_file = gzip.open("./test.gz")
 
         for raw_line in stats_file:
-            ##sys.stdout.write(".")
+            ##print_debug(".")
             line = raw_line.strip()
             if not line.startswith("# "):
                 temp_line = line.rsplit(" ", 4)
@@ -64,9 +70,9 @@ if __name__ == "__main__":
                 backup_dict[backup_file] = file_status
 
         stats_file.close()
-        ##sys.stdout.write(" done revision.\n")
+        ##print_debug(" done revision.\n")
 
-    sys.stdout.write(" done scanning.\n\n")
+    print_debug(" done scanning.\n\n")
 
     for backup_file in backup_dict.keys():
         file_status, last_present = backup_dict[backup_file]
