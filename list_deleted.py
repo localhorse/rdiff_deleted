@@ -35,9 +35,9 @@ if __name__ == "__main__":
 
     sys.stdout.write(" done loading.\n")
 
-    sys.stdout.write("Sorting list: .")
+    ##sys.stdout.write("Sorting list: .")
     rev_list.sort()
-    sys.stdout.write(" done sorting.\n")
+    ##sys.stdout.write(" done sorting.\n")
     backup_dict = {}
 
     sys.stdout.write("Scanning file statistics: ")
