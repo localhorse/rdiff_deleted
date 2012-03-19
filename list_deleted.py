@@ -18,14 +18,14 @@ def print_debug(msg):
 if __name__ == "__main__":
 
     if len(sys.argv) < 2:
-        print_debug("Not enough arguments.\n")
+        sys.stdout.write("Not enough arguments. (TODO: usage)\n")
         sys.exit(-1)
 
     dir = sys.argv[1]
     path = os.path.join(dir, "rdiff-backup-data")
 
     if not os.path.exists(path):
-        print_debug("Path does not look like a valid backup.\n")
+        sys.stdout.write("Path (%s) does not look like a valid backup directory.\n" % path)
         sys.exit(-1)
 
     rev_list = []
