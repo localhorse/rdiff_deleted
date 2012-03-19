@@ -77,6 +77,6 @@ if __name__ == "__main__":
     for backup_file in backup_dict.keys():
         file_status, last_present = backup_dict[backup_file]
         if file_status == DELETED:
-            sys.stdout.write("%s deleted, last present %s.\n" % (backup_file, last_present))
+            sys.stdout.write("%s deleted, last present %s\n" % (backup_file, last_present))
 
     ##print(backup_dict)
