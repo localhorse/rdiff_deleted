@@ -18,7 +18,7 @@ def print_debug(msg):
 if __name__ == "__main__":
 
     if len(sys.argv) < 2:
-        sys.stderr.write("Not enough arguments. (TODO: usage)\n")
+        sys.stderr.write("Usage: %s [path to backups directory]\n")
         sys.exit(-1)
 
     dir = sys.argv[1]
